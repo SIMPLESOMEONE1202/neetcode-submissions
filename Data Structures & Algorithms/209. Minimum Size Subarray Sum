@@ -1,0 +1,36 @@
+class Solution {
+    public int minSubArrayLen(int target, int[] nums) {
+
+        int low = 0; // window ka starting pointer
+        int sum = 0; // current window ka sum
+
+        int minLen = Integer.MAX_VALUE; // minimum length store karne ke liye
+
+        for (int high = 0; high < nums.length; high++) {
+
+            // naya element window me add karenge
+            sum += nums[high];
+
+            // jab tak sum target se bada ya equal hai
+            while (sum >= target) {
+
+                // current window ki length
+                int len = high - low + 1;
+
+                // minimum answer update karenge
+                minLen = Math.min(minLen, len);
+
+                // window ko left se shrink karenge
+                sum -= nums[low];
+                low++;
+            }
+        }
+
+        // agar koi valid subarray nahi mili
+        if (minLen == Integer.MAX_VALUE) {
+            return 0;
+        }
+
+        return minLen;
+    }
+}
